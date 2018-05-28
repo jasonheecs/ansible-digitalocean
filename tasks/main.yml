@@ -3,29 +3,14 @@
   include_vars:
     file: vars/private.yml
 
-- name: Update apt packages
-  apt:
-    update_cache: yes
-    cache_valid_time: 3600
+- import_tasks: debian.yml
+  when: ansible_os_family == 'Debian'
 
-- name: Install Python 2.x
-  raw: which python || sudo apt-get update && sudo apt-get install -qq -y python-simplejson
-  register: python_check
-  changed_when: not python_check.stdout | search('/usr/bin/python')
+- import_tasks: centos.yml
+  when: ansible_os_family == 'RedHat'
 
-- name: Install pip
-  apt:
-    name: python-pip
-    state: present
-    update_cache: yes
-
-- name: Install six
-  pip: name=six
-
-- name: Install dopy
-  pip:
-    name: dopy
-    version: 0.3.5
+- import_tasks: macos.yml
+  when: ansible_os_family == 'Darwin'
 
 - name: Register SSH key
   digital_ocean:
