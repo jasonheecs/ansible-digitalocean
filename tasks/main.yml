@@ -1,0 +1,73 @@
+---
+- name: Include private variables
+  include_vars:
+    file: vars/private.yml
+
+- name: Update apt packages
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: Install Python 2.x
+  raw: which python || sudo apt-get update && sudo apt-get install -qq -y python-simplejson
+  register: python_check
+  changed_when: not python_check.stdout | search('/usr/bin/python')
+
+- name: Install pip
+  apt:
+    name: python-pip
+    state: present
+    update_cache: yes
+
+- name: Install six
+  pip: name=six
+
+- name: Install dopy
+  pip:
+    name: dopy
+    version: 0.3.5
+
+- name: Register SSH key
+  digital_ocean:
+    state: present
+    command: ssh
+    name: "{{ do_ssh_key_name }}"
+    ssh_pub_key: "{{ do_ssh_pub_key }}"
+    api_token: "{{ do_api_token }}"
+  register: droplet
+  ignore_errors: yes
+
+- name: Create droplet
+  digital_ocean:
+    state: active
+    command: droplet
+    name: "{{ droplet_name }}"
+    region_id: "{{ droplet_region_id }}"
+    size_id: "{{ droplet_size_id }}"
+    image_id: "{{ droplet_image_id }}"
+    ssh_key_ids: "{{ droplet_additional_ssh_key_ids }} + [ '{{ droplet.ssh_key.id }}' ]"
+    unique_name: yes
+    api_token: "{{ do_api_token }}"
+    wait_timeout: 600
+  register: droplet
+
+- debug: msg="Droplet IP is {{ droplet.droplet.ip_address }}"
+
+- name: Create inventory in memory
+  add_host:
+    name: "{{ droplet_name }}"
+    groups: "{{ droplets_inventory_group }}"
+    ansible_ssh_host: "{{ droplet.droplet.ip_address }}"
+    ansible_ssh_user: root
+    ansible_ssh_private_key_file: "{{ do_ssh_private_key }}"
+
+- name: Add droplet to inventory file
+  become: no
+  lineinfile:
+    dest: "{{ ansible_inventory_file }}"
+    regexp: "{{ droplet.droplet.ip_address }}"
+    insertafter: "{{ droplets_inventory_group }}"
+    state: present
+    line: "{{ droplet.droplet.ip_address }}\n"
+  delegate_to: localhost
+  when: ansible_inventory_file|length > 0

@@ -1,0 +1,4 @@
+---
+do_api_token: inserttokenhere
+droplet_additional_ssh_key_ids: []
+ansible_inventory_file: "/path/to/inventory/file"
