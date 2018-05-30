@@ -1,11 +1,21 @@
 ---
+# SSH Key identifier in your DigitalOcean account
 do_ssh_key_name: Ansible SSH Key
+# Public SSH key to be added to your account
 do_ssh_pub_key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+# Private key used to ssh into your droplet
 do_ssh_private_key: "~/.ssh/id_rsa"
 
+# Name of the droplet
 droplet_name: test-droplet
+# This is the slug of the region you would like your server to be created in.
 droplet_region_id: sgp1
+# This is the slug of the size you would like the droplet to be created with.
 droplet_size_id: 512mb
+# This is the slug of the image you would like the droplet to be created with.
 droplet_image_id: ubuntu-18-04-x64
 
+# Location of your ansible inventory file
+ansible_inventory_file: ansible-hosts.ini
+# The group name that is used for grouping your droplets in your inventory file
 droplets_inventory_group: do_droplets

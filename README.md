@@ -1,38 +1,74 @@
-Role Name
+Ansible Role: DigitalOcean Droplet Creation
 =========
 
-A brief description of the role goes here.
+An ansible role that creates a DigitalOcean droplet and add the droplet's IP address to the inventory file.
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+None.
+
+
+Installation
+------------
+`ansible-galaxy install jasonheecs.digitalocean`
+
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+Available variables are listed below, along with default values (see defaults/main.yml and vars/private.yml.example):
+```
+# SSH Key identifier in your DigitalOcean account
+do_ssh_key_name: Ansible SSH Key
+# Public SSH key to be added to your account
+do_ssh_pub_key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+# Private key used to ssh into your droplet
+do_ssh_private_key: "~/.ssh/id_rsa"
+
+# Name of the droplet
+droplet_name: test-droplet
+# This is the slug of the region you would like your server to be created in.
+droplet_region_id: sgp1
+# This is the slug of the size you would like the droplet to be created with.
+droplet_size_id: 512mb
+# This is the slug of the image you would like the droplet to be created with.
+droplet_image_id: ubuntu-18-04-x64
+
+# Location of your ansible inventory file
+ansible_inventory_file: ansible-hosts.ini
+# The group name that is used for grouping your droplets in your inventory file
+droplets_inventory_group: do_droplets
+
+# Your DigitalOcean Personal Access Token (https://www.digitalocean.com/community/tutorials/how-to-use-the-digitalocean-api-v2)
+do_api_token: inserttokenhere
+# Additional SSH Keys to add to the droplet during the creation process (https://developers.digitalocean.com/documentation/v2/#ssh-keys)
+droplet_additional_ssh_key_ids: []
+```
 
 Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+None.
+
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+```
+- hosts: all
+  become: yes
+  roles:
+    - { role: jasonheecs.digitalocean }
+```   
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
 
 License
 -------
 
-BSD
+MIT
 
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+[Jason Hee](https://jasonhee.com)
