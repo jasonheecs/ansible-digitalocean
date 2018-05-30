@@ -14,11 +14,3 @@
     name: python-pip
     state: present
     update_cache: yes
-
-- name: Install six
-  pip: name=six
-
-- name: Install dopy
-  pip:
-    name: dopy
-    version: 0.3.5
