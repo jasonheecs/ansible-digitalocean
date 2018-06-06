@@ -10,16 +10,18 @@
 - import_tasks: centos.yml
   when: ansible_os_family == 'RedHat'
 
-- import_tasks: macos.yml
-  when: ansible_os_family == 'Darwin'
-
 - name: Install six
-  pip: name=six
+  pip:
+    name: six
+  environment:
+    PATH: /usr/local/bin:{{ ansible_env.PATH }}
 
 - name: Install dopy
   pip:
     name: dopy
     version: 0.3.5
+  environment:
+    PATH: /usr/local/bin:{{ ansible_env.PATH }}
 
 - name: Register SSH key
   digital_ocean:
@@ -30,6 +32,8 @@
     api_token: "{{ do_api_token }}"
   register: droplet
   ignore_errors: yes
+  environment:
+    PATH: /usr/local/bin:{{ ansible_env.PATH }}
 
 - name: Create droplet
   digital_ocean:
@@ -54,6 +58,7 @@
     ansible_ssh_host: "{{ droplet.droplet.ip_address }}"
     ansible_ssh_user: root
     ansible_ssh_private_key_file: "{{ do_ssh_private_key }}"
+  changed_when: false
 
 - name: Add droplet to inventory file
   become: no

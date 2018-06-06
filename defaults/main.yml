@@ -19,3 +19,5 @@ droplet_image_id: ubuntu-18-04-x64
 ansible_inventory_file: ansible-hosts.ini
 # The group name that is used for grouping your droplets in your inventory file
 droplets_inventory_group: do_droplets
+
+ansible_user_id: "{{ ansible_env.SUDO_USER }}"
