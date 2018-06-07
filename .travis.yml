@@ -1,0 +1,45 @@
+---
+sudo: required
+services:
+  - docker
+
+language: python
+python: "2.7"
+
+env:
+  - ANSIBLE_VERSION: latest
+    distribution: ubuntu
+  - ANSIBLE_VERSION: latest
+    distribution: centos
+  - ANSIBLE_VERSION: latest
+    distribution: debian
+  - ANSIBLE_VERSION: 2.3.0.0
+    distribution: ubuntu
+  - ANSIBLE_VERSION: 2.3.0.0
+    distribution: centos
+  - ANSIBLE_VERSION: 2.3.0.0
+    distribution: debian
+
+cache: pip
+
+before_install:
+  - sudo apt-get update -qq
+  - sleep 3
+  - sudo apt-get install -qq python-apt python-pycurl git python-pip ruby ruby-dev build-essential autoconf
+  - gem install bundler
+
+install:
+  - bundle install
+  - if [ "$ANSIBLE_VERSION" = "latest" ]; then pip install ansible; else pip install ansible==$ANSIBLE_VERSION; fi
+
+script:
+  - export ANSIBLE_CONFIG="test/ansible.cfg"
+  - ansible --version
+  - docker version
+  - export LC_ALL=C
+  - bundle show
+  - bundle exec kitchen test ${distribution}
+
+notifications:
+  email:
+    on_success: never

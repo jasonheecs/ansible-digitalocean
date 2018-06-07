@@ -1,5 +1,6 @@
 Ansible Role: DigitalOcean Droplet Creation
 =========
+[![Build Status](https://travis-ci.org/jasonheecs/ansible-digitalocean.svg?branch=master)](https://travis-ci.org/jasonheecs/ansible-digitalocean)
 
 An ansible role that creates a DigitalOcean droplet and add the droplet's IP address to the inventory file.
 

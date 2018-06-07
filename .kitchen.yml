@@ -10,6 +10,7 @@ provisioner:
   ansible_verbosity: 2
   ansible_verbose: true
   ansible_extra_flags: '--skip-tags=create_droplet,add_ssh_key'
+  idempotency_test: true
 
 platforms:
   - name: ubuntu-16.04
@@ -30,10 +31,9 @@ verifier:
 
 suites:
   - name: droplet
+    driver:
+      provision_command: export LC_ALL=C
     verifier:
       default_pattern: true
       bundler_path: '/usr/local/bin'
       rspec_path: '/usr/local/bin'
-      env_vars:
-        TARGET_HOST: 127.0.0.1
-        SUDO: true

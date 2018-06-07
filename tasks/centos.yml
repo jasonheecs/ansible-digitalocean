@@ -1,7 +1,4 @@
 ---
-- name: Update yum packages
-  yum: name=* state=latest
-
 - name: Install Python 2.x
   raw: which python || (sudo yum install -y centos-release-scl && sudo yum install -y python2)
   register: python_check
