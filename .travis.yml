@@ -24,7 +24,7 @@ cache: pip
 
 before_install:
   - sudo apt-get update -qq
-  - sleep 3
+  - sleep 5
   - sudo apt-get install -qq python-apt python-pycurl git python-pip ruby ruby-dev build-essential autoconf
   - gem install bundler
 
