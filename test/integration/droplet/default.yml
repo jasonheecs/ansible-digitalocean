@@ -1,0 +1,6 @@
+---
+- name: Setup
+  hosts: all
+  become: yes
+  roles:
+    - { role: ansible-digitalocean, when: ansible_os_family == 'Debian' or ansible_os_family == 'RedHat'}

@@ -34,6 +34,7 @@
   ignore_errors: yes
   environment:
     PATH: /usr/local/bin:{{ ansible_env.PATH }}
+  tags: add_ssh_key
 
 - name: Create droplet
   digital_ocean:
@@ -48,8 +49,10 @@
     api_token: "{{ do_api_token }}"
     wait_timeout: 600
   register: droplet
+  tags: create_droplet
 
 - debug: msg="Droplet IP is {{ droplet.droplet.ip_address }}"
+  tags: create_droplet
 
 - name: Create inventory in memory
   add_host:
@@ -59,6 +62,7 @@
     ansible_ssh_user: root
     ansible_ssh_private_key_file: "{{ do_ssh_private_key }}"
   changed_when: false
+  tags: create_droplet
 
 - name: Add droplet to inventory file
   become: no
@@ -70,3 +74,4 @@
     line: "{{ droplet.droplet.ip_address }}\n"
   delegate_to: localhost
   when: ansible_inventory_file|length > 0
+  tags: create_droplet
