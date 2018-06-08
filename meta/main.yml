@@ -18,7 +18,9 @@ galaxy_info:
     - name: macOS
       versions:
         - Sierra
-        - High Sierra
+    - name: MacOSX
+      version:
+        - 10.12
 
   galaxy_tags:
     - DigitalOcean

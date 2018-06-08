@@ -1,6 +1,7 @@
 Ansible Role: DigitalOcean Droplet Creation
 =========
-[![Build Status](https://travis-ci.org/jasonheecs/ansible-digitalocean.svg?branch=master)](https://travis-ci.org/jasonheecs/ansible-digitalocean)
+[![Build Status][travis-badge]][travis-link]
+[![Galaxy Role][role-badge]][galaxy-link]
 
 An ansible role that creates a DigitalOcean droplet and add the droplet's IP address to the inventory file.
 
@@ -109,3 +110,9 @@ Author Information
 ------------------
 
 [Jason Hee](https://jasonhee.com)
+
+
+[galaxy-link]: https://galaxy.ansible.com/jasonheecs/digitalocean/
+[role-badge]: https://img.shields.io/ansible/role/26189.svg
+[travis-badge]: https://travis-ci.org/jasonheecs/ansible-digitalocean.svg?branch=master
+[travis-link]: https://travis-ci.org/jasonheecs/ansible-digitalocean
