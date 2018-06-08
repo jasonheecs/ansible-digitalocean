@@ -3,16 +3,25 @@ galaxy_info:
   author: Jason Hee
   description: Create DigitalOcean droplet via Ansible
   license: MIT
-  min_ansible_version: 1.2
+  min_ansible_version: 2.0
 
   platforms:
-  - name: Ubuntu
-    versions:
-    - all
-  - name: CentOS
-    versions:
-    - 7
+    - name: Debian
+      versions:
+      - all
+    - name: Ubuntu
+      versions:
+      - all
+    - name: EL
+      versions:
+      - 7
+    - name: macOS
+      versions:
+        - Sierra
+        - High Sierra
 
   galaxy_tags:
     - DigitalOcean
     - droplet
+    - development
+    - web

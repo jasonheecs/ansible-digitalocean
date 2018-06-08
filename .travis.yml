@@ -20,7 +20,9 @@ env:
   - ANSIBLE_VERSION: 2.3.0.0
     distribution: debian
 
-cache: pip
+cache:
+  - pip
+  - bundler
 
 before_install:
   - sudo apt-get update -qq
@@ -43,3 +45,4 @@ script:
 notifications:
   email:
     on_success: never
+  webhooks: https://galaxy.ansible.com/api/v1/notifications/
