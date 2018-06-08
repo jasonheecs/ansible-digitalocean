@@ -55,12 +55,24 @@ Dependencies
 None.
 
 
-Example Playbook
+Example Playbooks
 ----------------
+
+A playbook that runs this role on a remote machine:
 
 ```yaml
 - hosts: all
-  become: yes
+  become: no
+  roles:
+    - { role: jasonheecs.digitalocean }
+```
+
+A playbook that runs this role on your local machine:
+
+```yaml
+- hosts: localhost
+  connection: local
+  become: no
   roles:
     - { role: jasonheecs.digitalocean }
 ```
