@@ -17,6 +17,10 @@ platforms:
     driver_config:
       image: williamyeh/ansible:ubuntu16.04-onbuild
       platform: ubuntu
+  - name: ubuntu-14.04
+    driver_config:
+      image: williamyeh/ansible:ubuntu14.04-onbuild
+      platform: ubuntu
   - name: centos-7.0
     driver_config:
       image: williamyeh/ansible:centos7-onbuild
@@ -24,6 +28,10 @@ platforms:
   - name: debian-9
     driver_config:
       image: williamyeh/ansible:debian9-onbuild
+      platform: debian
+  - name: debian-8
+    driver_config:
+      image: williamyeh/ansible:debian8-onbuild
       platform: debian
 
 verifier:
