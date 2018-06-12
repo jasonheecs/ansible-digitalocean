@@ -16,7 +16,7 @@ droplet_size_id: 512mb
 droplet_image_id: ubuntu-18-04-x64
 
 # Location of your ansible inventory file
-ansible_inventory_file: ansible-hosts.ini
+ansible_inventory_file: hosts.ini
 # The group name that is used for grouping your droplets in your inventory file
 droplets_inventory_group: do_droplets
 
