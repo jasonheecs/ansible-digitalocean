@@ -8,26 +8,18 @@ python: "2.7"
 
 env:
   - ANSIBLE_VERSION: latest
-    distribution: ubuntu
-  - ANSIBLE_VERSION: latest
-    distribution: centos
-  - ANSIBLE_VERSION: latest
-    distribution: debian
   - ANSIBLE_VERSION: 2.3.0.0
-    distribution: ubuntu
-  - ANSIBLE_VERSION: 2.3.0.0
-    distribution: centos
-  - ANSIBLE_VERSION: 2.3.0.0
-    distribution: debian
+  - ANSIBLE_VERSION: 2.2.0.0
 
 cache:
-  - pip
-  - bundler
+  pip: true
+  directories:
+    - $HOME/.rvm/gems
 
 before_install:
   - sudo apt-get update -qq
   - sleep 5
-  - sudo apt-get install -qq python-apt python-pycurl git python-pip ruby ruby-dev build-essential autoconf
+  - sudo apt-get install -qq python-apt python-pycurl
   - gem install bundler
 
 install:
@@ -40,7 +32,7 @@ script:
   - docker version
   - export LC_ALL=C
   - bundle show
-  - bundle exec kitchen test ${distribution}
+  - bundle exec kitchen test -c
 
 notifications:
   email:
