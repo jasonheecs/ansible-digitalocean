@@ -40,7 +40,8 @@ verifier:
 suites:
   - name: droplet
     driver:
-      provision_command: export LC_ALL=C
+      provision_command: 
+        - export LC_ALL=C
     verifier:
       default_pattern: true
       bundler_path: '/usr/local/bin'

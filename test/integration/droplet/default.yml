@@ -1,6 +1,14 @@
 ---
+- name: Set Facts for testing
+  hosts: localhost
+  tasks:
+    - set_fact:
+        droplet:
+          droplet:
+            ip_address: 123.255.123.255
+
 - name: Setup
-  hosts: all
+  hosts: localhost
   become: yes
   roles:
     - { role: ansible-digitalocean, when: ansible_os_family == 'Debian' or ansible_os_family == 'RedHat'}

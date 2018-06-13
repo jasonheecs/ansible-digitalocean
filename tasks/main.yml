@@ -1,8 +1,12 @@
 ---
+- name: Check if vars/private.yml exist
+  stat: path={{ role_path }}/vars/private.yml
+  register: private_vars
+
 - name: Include private variables
   include_vars:
     file: vars/private.yml
-  ignore_errors: yes
+  when: private_vars.stat.exists == true
 
 - import_tasks: debian.yml
   when: ansible_os_family == 'Debian'
@@ -64,6 +68,23 @@
   changed_when: false
   tags: create_droplet
 
+- name: Check if droplets inventory group exists in inventory file
+  shell: grep -x \[{{ droplets_inventory_group }}\] {{ ansible_inventory_file }}
+  register: inventory_group
+  tags: inventory_file
+  failed_when: inventory_group.rc == 2
+  changed_when: inventory_group.rc == 0
+  when: ansible_inventory_file|length > 0
+
+- name: Add inventory group to inventory file
+  become: no
+  lineinfile:
+    dest: "{{ ansible_inventory_file }}"
+    line: "[{{ droplets_inventory_group }}]"
+    state: present
+  tags: inventory_file
+  when: ansible_inventory_file|length > 0 and inventory_group.rc == 1
+
 - name: Add droplet to inventory file
   become: no
   lineinfile:
@@ -71,7 +92,7 @@
     regexp: "{{ droplet.droplet.ip_address }}"
     insertafter: "{{ droplets_inventory_group }}"
     state: present
-    line: "{{ droplet.droplet.ip_address }}\n"
+    line: "{{ droplet.droplet.ip_address }}"
   delegate_to: localhost
   when: ansible_inventory_file|length > 0
-  tags: create_droplet
+  tags: inventory_file
