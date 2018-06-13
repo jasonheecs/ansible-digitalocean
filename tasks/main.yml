@@ -90,7 +90,7 @@
   lineinfile:
     dest: "{{ ansible_inventory_file }}"
     regexp: "{{ droplet.droplet.ip_address }}"
-    insertafter: "{{ droplets_inventory_group }}"
+    insertafter: ^\[{{ droplets_inventory_group }}\]
     state: present
     line: "{{ droplet.droplet.ip_address }}"
   delegate_to: localhost
