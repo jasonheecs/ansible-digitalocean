@@ -92,7 +92,7 @@
     regexp: "{{ droplet.droplet.ip_address }}"
     insertafter: ^\[{{ droplets_inventory_group }}\]
     state: present
-    line: "{{ droplet.droplet.ip_address }}"
+    line: "{{ droplet_name }} ansible_host={{ droplet.droplet.ip_address }}"
   delegate_to: localhost
   when: ansible_inventory_file|length > 0
   tags: inventory_file
