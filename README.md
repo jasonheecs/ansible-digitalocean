@@ -78,6 +78,8 @@ A playbook that runs this role on your local machine:
     - { role: jasonheecs.digitalocean }
 ```
 
+Refer to a [sample playbook here](https://github.com/jasonheecs/ansible-digitalocean-sample-playbook).
+
 Tests
 ---------------
 Automated testing is done via [Test Kitchen](https://github.com/test-kitchen/test-kitchen), [Kitchen Ansible](https://github.com/neillturner/kitchen-ansible) and [Kitchen Docker](https://github.com/test-kitchen/kitchen-docker)
@@ -88,7 +90,7 @@ To run the tests, make sure [Ruby](https://www.ruby-lang.org/en/documentation/in
 gem install bundler && bundle exec kitchen test
 ```
 
-Refer to the [travis.yml](.travis.yml) file and [Travis build logs](https://travis-ci.org/jasonheecs/ansible-digitalocean) for details on the test build process and expected outputs.
+Refer to the [travis.yml](.travis.yml) file and [Travis build logs][travis-link] for details on the test build process and expected outputs.
 
 
 Supported Platforms
