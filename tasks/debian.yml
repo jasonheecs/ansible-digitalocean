@@ -7,7 +7,7 @@
 - name: Install Python 2.x
   raw: which python || sudo apt-get update && sudo apt-get install -qq -y python-simplejson
   register: python_check
-  changed_when: not python_check.stdout | search('/usr/bin/python')
+  changed_when: not python_check.stdout is search('/usr/bin/python')
 
 - name: Install pip
   apt:

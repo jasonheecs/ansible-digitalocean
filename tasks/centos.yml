@@ -2,24 +2,19 @@
 - name: Install Python 2.x
   raw: which python || (sudo yum install -y centos-release-scl && sudo yum install -y python2)
   register: python_check
-  changed_when: not python_check.stdout | search('/bin/python')
-
-- name: Check if EPEL repo is already configured.
-  stat: path="/etc/yum.repos.d/epel.repo"
-  register: epel_repofile_result
- 
-- name: Install EPEL repo.
-  yum:
-    name: "https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ansible_distribution_major_version }}.noarch.rpm"
-    state: present
-  register: result
-  when: not epel_repofile_result.stat.exists
+  changed_when: not python_check.stdout is search('/bin/python')
  
 - name: Import EPEL GPG key.
   rpm_key:
     key: "https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}"
     state: present
-  when: not epel_repofile_result.stat.exists
+
+- name: Enable EPEL repo
+  yum_repository:
+    name: epel
+    description: EPEL YUM repo
+    baseurl: https://download.fedoraproject.org/pub/epel/$releasever/$basearch/
+    enabled: yes
 
 - name: Install pip
   yum:

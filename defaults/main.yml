@@ -21,3 +21,8 @@ ansible_inventory_file: hosts
 droplets_inventory_group: do_droplets
 
 ansible_user_id: "{{ ansible_env.SUDO_USER }}"
+
+pip_packages:
+  - name: dopy
+    version: 0.3.5
+  - name: six
